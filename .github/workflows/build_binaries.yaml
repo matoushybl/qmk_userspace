@@ -11,7 +11,7 @@ jobs:
     uses: qmk/.github/.github/workflows/qmk_userspace_build.yml@main
     with:
       qmk_repo: matoushybl/qmk_firmware
-      qmk_ref: feat/skeletyl/keeboar
+      qmk_ref: sweep
 
   publish:
     name: 'QMK Userspace Publish'

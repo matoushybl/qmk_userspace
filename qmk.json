@@ -2,6 +2,6 @@
     "userspace_version": "1.1",
     "build_targets": [
         ["bastardkb/skeletyl/v2/keeboar", "hati"],
-        ["ferris/sweep", "hati"]
+        ["ferris/hati_sweep", "hati"]
     ]
 }
