@@ -1,7 +1,36 @@
 // Copyright 2023 QMK
 // SPDX-License-Identifier: GPL-2.0-or-later
+//
 
 #include QMK_KEYBOARD_H
+#include "features/achordion.h"
+
+bool process_record_user(uint16_t keycode, keyrecord_t* record) {
+    if (!process_achordion(keycode, record)) {
+        return false;
+    }
+    // Your macros ...
+
+    return true;
+}
+
+void housekeeping_task_user(void) {
+    achordion_task();
+}
+
+uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode, uint16_t next_keycode) {
+    if (IS_QK_LAYER_TAP(tap_hold_keycode)) {
+        return 0; // Disable streak detection on layer-tap keys.
+    }
+
+    // Otherwise, tap_hold_keycode is a mod-tap key.
+    uint8_t mod = mod_config(QK_MOD_TAP_GET_MODS(tap_hold_keycode));
+    if ((mod & MOD_LSFT) != 0) {
+        return 100; // A shorter streak timeout for Shift mod-tap keys.
+    } else {
+        return 240; // A longer timeout otherwise.
+    }
+}
 
 #define BASE 0
 #define NAV 1
@@ -10,12 +39,41 @@
 #define MOUSE 4
 #define FN 5
 
-const uint16_t PROGMEM fn_layer_switch[] = { LT(NUM, KC_BSPC), LT(SYM, KC_ENT), COMBO_END };
+// unused for now
+#define HOME_A LGUI_T(KC_A)
+#define HOME_S LALT_T(KC_S)
+#define HOME_D LSFT_T(KC_D)
+#define HOME_F LCTL_T(KC_F)
+
+#define HOME_J RCTL_T(KC_J)
+#define HOME_K RSFT_T(KC_K)
+#define HOME_L RALT_T(KC_L)
+#define HOME_M RGUI_T(KC_SCLN)
+
+#define L_THUMB_OUTER LT(MOUSE, KC_ESC)
+#define L_THUMB_INNER LT(NAV, KC_SPC)
+#define R_THUMB_INNER LT(NUM, KC_BSPC)
+#define R_THUMB_OUTER LT(SYM, KC_ENT)
+
+bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, uint16_t other_keycode, keyrecord_t* other_record) {
+    // skip thumb keys
+    switch (tap_hold_keycode) {
+        case L_THUMB_INNER:
+        case L_THUMB_OUTER:
+        case R_THUMB_INNER:
+        case R_THUMB_OUTER:
+            return true;
+    }
+    return achordion_opposite_hands(tap_hold_record, other_record);
+}
+
+const uint16_t PROGMEM fn_layer_switch[] = {LT(NUM, KC_BSPC), LT(SYM, KC_ENT), COMBO_END};
 
 combo_t key_combos[] = {
     COMBO(fn_layer_switch, MO(FN)),
 };
 
+// clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [BASE] = LAYOUT_split_3x5_3(
@@ -91,4 +149,4 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                       //`--------------------------'  `--------------------------'
   )
 };
-
+// clang-format on
