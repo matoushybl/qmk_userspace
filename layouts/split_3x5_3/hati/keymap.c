@@ -67,12 +67,6 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, ui
     return achordion_opposite_hands(tap_hold_record, other_record);
 }
 
-const uint16_t PROGMEM fn_layer_switch[] = {LT(NUM, KC_BSPC), LT(SYM, KC_ENT), COMBO_END};
-
-combo_t key_combos[] = {
-    COMBO(fn_layer_switch, MO(FN)),
-};
-
 // clang-format off
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -84,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                 KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                    LT(MOUSE, KC_ESC), LT(NAV, KC_SPC),  XXXXXXX,    XXXXXXX, LT(NUM, KC_BSPC) , LT(SYM, KC_ENT)
+                                    LT(MOUSE, KC_ESC), LT(NAV, KC_SPC),  XXXXXXX,    XXXXXXX, LT(NUM, KC_BSPC) , LT(FN, KC_ENT)
                                       //`--------------------------'  `--------------------------'
 
   ),
