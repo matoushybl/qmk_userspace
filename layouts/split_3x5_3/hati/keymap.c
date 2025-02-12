@@ -53,7 +53,7 @@ uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode, uint16_t next
 #define L_THUMB_OUTER LT(MOUSE, KC_ESC)
 #define L_THUMB_INNER LT(NAV, KC_SPC)
 #define R_THUMB_INNER LT(NUM, KC_BSPC)
-#define R_THUMB_OUTER LT(SYM, KC_ENT)
+#define R_THUMB_OUTER LT(FN, KC_ENT)
 
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, uint16_t other_keycode, keyrecord_t* other_record) {
     // skip thumb keys
@@ -91,7 +91,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,                              KC_HOME, KC_PGDN, KC_PGUP, KC_END, KC_DEL,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
-                                         XXXXXXX, XXXXXXX,  XXXXXXX,     _______, KC_TAB, LSFT(KC_TAB)
+                                         XXXXXXX, XXXXXXX,  XXXXXXX,     _______, KC_DEL, LSFT(KC_TAB)
                                       //`--------------------------'  `--------------------------'
   ),
 
