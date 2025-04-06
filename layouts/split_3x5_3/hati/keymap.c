@@ -38,6 +38,7 @@ uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode, uint16_t next
 #define SYM 3
 #define MOUSE 4
 #define FN 5
+#define SHORTCUTS 6
 
 // unused for now
 #define HOME_A LGUI_T(KC_A)
@@ -54,6 +55,7 @@ uint16_t achordion_streak_chord_timeout(uint16_t tap_hold_keycode, uint16_t next
 #define L_THUMB_INNER LT(NAV, KC_SPC)
 #define R_THUMB_INNER LT(NUM, KC_BSPC)
 #define R_THUMB_OUTER LT(FN, KC_ENT)
+#define SHORTCUT_KEY LT(SHORTCUTS, KC_Z)
 
 bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, uint16_t other_keycode, keyrecord_t* other_record) {
     // skip thumb keys
@@ -62,6 +64,7 @@ bool achordion_chord(uint16_t tap_hold_keycode, keyrecord_t* tap_hold_record, ui
         case L_THUMB_OUTER:
         case R_THUMB_INNER:
         case R_THUMB_OUTER:
+        case SHORTCUT_KEY:
             return true;
     }
     return achordion_opposite_hands(tap_hold_record, other_record);
@@ -76,7 +79,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
       LGUI_T(KC_A), LALT_T(KC_S), LSFT_T(KC_D), LCTL_T(KC_F), KC_G,             KC_H, RCTL_T(KC_J), RSFT_T(KC_K), RALT_T(KC_L), RGUI_T(KC_SCLN),
   //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
-      KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                                 KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
+      LT(SHORTCUTS, KC_Z),    KC_X,    KC_C,    KC_V,    KC_B,                                 KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                     LT(MOUSE, KC_ESC), LT(NAV, KC_SPC),  XXXXXXX,    XXXXXXX, LT(NUM, KC_BSPC) , LT(FN, KC_ENT)
                                       //`--------------------------'  `--------------------------'
@@ -140,6 +143,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_F12, KC_F1, KC_F2, KC_F3, XXXXXXX,                                     _______, KC_AUDIO_MUTE, _______, _______, _______,
   //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
                                           _______,  _______,  _______,     _______, _______, _______
+                                      //`--------------------------'  `--------------------------'
+  ),
+  [SHORTCUTS] = LAYOUT_split_3x5_3(
+  //,-----------------------------------------------------.                    ,-----------------------------------------------------.
+      XXXXXXX, LCTL(KC_Z), LCTL(KC_E),  LCTL(KC_R), LCTL(KC_T),                  _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      XXXXXXX, LCTL(KC_S), LCTL(KC_D), LCTL(KC_F), LCTL(KC_A),                   _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------|                    |--------+--------+--------+--------+--------+--------|
+      _______, LCTL(KC_X), LCTL(KC_C), LCTL(KC_V), LCTL(KC_B),                   _______, _______, _______, _______, _______,
+  //|--------+--------+--------+--------+--------+--------+--------|  |--------+--------+--------+--------+--------+--------+--------|
+                                          KC_LSFT,  _______,  _______,     _______, _______, _______
                                       //`--------------------------'  `--------------------------'
   )
 };
